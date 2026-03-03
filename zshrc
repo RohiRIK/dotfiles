@@ -113,8 +113,6 @@ alias na='bun add'
 alias nrd='bun add -d'
 alias nrm='bun remove'
 
-# AI Tools
-alias fabric='fabric-ai'            # Fabric AI framework by Daniel Miessler
 
 # File operations
 alias cp='cp -iv'
@@ -143,7 +141,6 @@ alias https='http --verify=no'
 # JSON formatting
 alias json='python3 -m json.tool'
 
-alias homelab="ssh rohi@192.168.2.7"
 
 # =============================================================================
 # FUNCTIONS
