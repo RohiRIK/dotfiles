@@ -1,29 +1,12 @@
-## =============================================================================
+# =============================================================================
 # macOS Zsh Configuration
 # DevOps & Security Professional Setup
 # =============================================================================
 
-# Performance: Skip compinit check for faster startups (run manually: compinit)
-# Uncomment for faster startup (but run 'compaudit' periodically)
-# skip_global_compinit=1
-
 # =============================================================================
-# OH MY ZSH
+# HISTORY
 # =============================================================================
 
-# Path to oh-my-zsh installation
-export ZSH="$HOME/.oh-my-zsh"
-
-# Theme (using starship instead, see bottom of file)
-ZSH_THEME=""
-
-# Performance optimizations
-DISABLE_AUTO_UPDATE="true"          # Manual updates: omz update
-DISABLE_MAGIC_FUNCTIONS="true"      # Faster URL pasting
-COMPLETION_WAITING_DOTS="true"      # Show dots while waiting for completion
-HIST_STAMPS="yyyy-mm-dd"            # History timestamp format
-
-# History configuration
 HISTFILE=~/.zsh_history
 HISTSIZE=50000
 SAVEHIST=50000
@@ -33,43 +16,6 @@ setopt HIST_FIND_NO_DUPS            # Don't show duplicates in search
 setopt HIST_REDUCE_BLANKS           # Remove extra blanks
 setopt SHARE_HISTORY                # Share history across sessions
 setopt INC_APPEND_HISTORY           # Write immediately, not on exit
-
-# =============================================================================
-# PLUGINS
-# =============================================================================
-
-plugins=(
-    # Version Control
-    git                             # Git aliases and functions
-    gh                              # GitHub CLI completion
-    
-    # DevOps & Infrastructure
-    docker                          # Docker completion and aliases
-    docker-compose                  # Docker Compose completion
-    kubectl                         # Kubernetes completion and aliases
-    helm                            # Helm completion
-    
-    # Development
-    node                            # Node.js aliases
-    npm                             # NPM completion
-    pip                             # Python pip completion
-    python                          # Python aliases
-    bun 
-
-    # Productivity
-    sudo                            # Double ESC to add sudo
-    copypath                        # Copy current path: copypath
-    copyfile                        # Copy file content: copyfile <file>
-    web-search                      # Search web: google <query>
-    jsontools                       # JSON formatting: pp_json
-    
-    # Oh My Zsh Custom Plugins (installed separately)
-    zsh-autosuggestions            # Command suggestions
-    zsh-syntax-highlighting        # Syntax highlighting (load last)
-)
-
-# Source Oh My Zsh
-# source $ZSH/oh-my-zsh.sh
 
 # =============================================================================
 # ENVIRONMENT VARIABLES
@@ -88,17 +34,19 @@ if [[ $(uname -m) == "arm64" ]]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-# PATH additions
+# =============================================================================
+# PATH
+# =============================================================================
+
 export PATH="/usr/local/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="/opt/homebrew/bin:$PATH"
-
-# Development paths
 export PATH="$HOME/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"          # Rust
-
-# Python (pyenv PATH — init and PYENV_ROOT set further below)
-export PATH="$HOME/.pyenv/bin:$PATH"
+export PATH="$HOME/.pyenv/bin:$PATH"          # pyenv
+export PATH="$HOME/.bun/bin:$PATH"            # Bun
+export PATH="/Users/rohirikman/.antigravity/antigravity/bin:$PATH"
+export PATH="/Users/rohirikman/.opencode/bin:$PATH"
 
 # Go
 export GOPATH="$HOME/go"
@@ -118,7 +66,7 @@ export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
 
-# Starship prompt - Fast, customizable prompt
+# Starship prompt
 eval "$(starship init zsh)"
 
 # direnv - Per-directory environment variables
@@ -129,6 +77,9 @@ export PYENV_ROOT="$HOME/.pyenv"
 if [[ -d "$PYENV_ROOT/bin" ]]; then
     eval "$(pyenv init - --no-rehash)"
 fi
+
+# Bun completions
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # =============================================================================
 # ALIASES - General
@@ -174,7 +125,6 @@ alias mkdir='mkdir -pv'
 # Quick edits
 alias zshrc='$EDITOR ~/.zshrc'
 alias reload='source ~/.zshrc'
-alias brewfile='$EDITOR ~/dotfiles/Brewfile'
 
 # System
 alias cleanup='brew cleanup -s && brew autoremove'
@@ -271,11 +221,6 @@ timezsh() {
     for i in $(seq 1 10); do /usr/bin/time $shell -i -c exit; done
 }
 
-# Backup Brewfile
-brewbackup() {
-    cd ~/dotfiles && ./backup.sh
-}
-
 # =============================================================================
 # SECURITY & NETWORKING
 # =============================================================================
@@ -308,19 +253,6 @@ zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.zsh/cache
 
 # =============================================================================
-# NVM (Node Version Manager) — lazy loaded for fast startup
-# nvm/node/npm/npx trigger the real load on first use
-# =============================================================================
-export NVM_DIR="$HOME/.nvm"
-_nvm_load() {
-    unset -f nvm node _nvm_load
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-}
-nvm()  { _nvm_load; nvm  "$@"; }
-node() { _nvm_load; node "$@"; }
-
-# =============================================================================
 # CUSTOM CONFIGS
 # =============================================================================
 
@@ -340,25 +272,13 @@ bindkey '^[[B' history-search-forward
 bindkey "^[[13;2u" accept-line
 bindkey "^[[27;2;13~" accept-line
 
-# Claude Code 
+# =============================================================================
+# CLAUDE CODE
+# =============================================================================
 
-# Daily development
 alias claude-dev='claude --system-prompt "$(cat ~/.claude/contexts/dev.md)"'
-
-# PR review mode
 alias claude-review='claude --system-prompt "$(cat ~/.claude/contexts/review.md)"'
-
-# Research/exploration mode
 alias claude-research='claude --system-prompt "$(cat ~/.claude/contexts/research.md)"'
-
-# Added by Antigravity
-export PATH="/Users/rohirikman/.antigravity/antigravity/bin:$PATH"
-
-# opencode
-export PATH=/Users/rohirikman/.opencode/bin:$PATH
-export PATH="$HOME/.bun/bin:$PATH"
-# Bun completions
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # =============================================================================
 # ZOXIDE INITIALIZATION (MUST REMAIN AT THE END)
