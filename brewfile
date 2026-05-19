@@ -71,8 +71,6 @@ brew "trivy"
 brew "xh"
 
 # === AI Tools ===
-brew "fabric-ai"
-brew "ollama"
 brew "playwright-mcp"
 brew "anomalyco/tap/opencode"
 
@@ -141,6 +139,8 @@ uv "specify-cli"
 # Removed: intentionally excluded
 # =============================================================================
 # block-goose-cli   — redundant alongside Claude Code
+# fabric-ai         — removed
+# ollama            — local LLMs removed
 # cursor            — redundant AI editor
 # fish              — user is on zsh
 # font-fira-code    — only JetBrainsMono used in Ghostty

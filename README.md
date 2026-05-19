@@ -66,32 +66,16 @@ claude                   # authenticate Claude Code (opens browser)
 
 ---
 
-## AI Tooling
+## Coding Agents & AI Stack
 
-All AI tools are installed via the Brewfile — no separate steps needed.
+All tools installed via Brewfile — no separate steps needed.
 
-| Tool | What it does |
-|------|-------------|
-| `claude` / `claude-code@latest` | Claude Code CLI — AI coding agent |
-| `chatgpt` | ChatGPT desktop app |
-| `ollama` | Local LLMs — run models offline |
-| `fabric-ai` | AI workflow automation framework |
-| `opencode` | OpenCode CLI — AI coding agent |
-
-### Claude Code
-
-```bash
-claude                              # first run opens browser auth
-claude mcp add <name> <command>     # add an MCP server
-brew upgrade claude-code@latest     # update (Homebrew won't auto-update)
-```
-
-### Ollama (local LLMs)
-
-```bash
-ollama pull llama3.2                # download a model
-ollama run llama3.2                 # chat in terminal
-```
+| Agent / Tool | Role |
+|---|---|
+| `claude` + `claude-code@latest` | Primary AI coding agent — desktop app + CLI |
+| `opencode` | Secondary AI coding agent — terminal-native CLI |
+| `chatgpt` | Desktop app — chat & research |
+| `playwright-mcp` | MCP server — gives agents browser automation |
 
 ---
 
