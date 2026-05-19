@@ -38,12 +38,16 @@
 
 ## Setup
 
-### Fresh Mac — one command
+### One-liner (curl)
 
 ```bash
-git clone https://github.com/RohiRIK/dotfiles.git ~/dotfiles
-cd ~/dotfiles
-./install.sh
+curl -fsSL https://raw.githubusercontent.com/RohiRIK/dotfiles/main/install.sh | bash
+```
+
+### Or clone first (recommended — lets you review before running)
+
+```bash
+git clone https://github.com/RohiRIK/dotfiles.git ~/dotfiles && ~/dotfiles/install.sh
 ```
 
 `install.sh` will:
