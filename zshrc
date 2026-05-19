@@ -43,10 +43,8 @@ export PATH="$HOME/.local/bin:$PATH"
 export PATH="/opt/homebrew/bin:$PATH"
 export PATH="$HOME/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"          # Rust
-export PATH="$HOME/.pyenv/bin:$PATH"          # pyenv
 export PATH="$HOME/.bun/bin:$PATH"            # Bun
-export PATH="/Users/rohirikman/.antigravity/antigravity/bin:$PATH"
-export PATH="/Users/rohirikman/.opencode/bin:$PATH"
+export PATH="$HOME/.opencode/bin:$PATH"       # OpenCode
 
 # Go
 export GOPATH="$HOME/go"
@@ -71,12 +69,6 @@ eval "$(starship init zsh)"
 
 # direnv - Per-directory environment variables
 eval "$(direnv hook zsh)"
-
-# pyenv - Python version management (no-rehash = faster startup)
-export PYENV_ROOT="$HOME/.pyenv"
-if [[ -d "$PYENV_ROOT/bin" ]]; then
-    eval "$(pyenv init - --no-rehash)"
-fi
 
 # Bun completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
@@ -126,7 +118,7 @@ alias reload='source ~/.zshrc'
 
 # System
 alias cleanup='brew cleanup -s && brew autoremove'
-alias update='brew update && brew upgrade && mas upgrade'
+alias update='brew update && brew upgrade'
 alias myip='curl ifconfig.me'
 alias ports='lsof -iTCP -sTCP:LISTEN -n -P'
 
@@ -135,11 +127,11 @@ alias ports='lsof -iTCP -sTCP:LISTEN -n -P'
 # =============================================================================
 
 # HTTP testing
-alias http='httpie'
-alias https='http --verify=no'
+alias http='xh'
+alias https='xh --verify=no'
 
 # JSON formatting
-alias json='python3 -m json.tool'
+alias json='jq .'
 
 
 # =============================================================================
@@ -268,14 +260,6 @@ bindkey '^[[B' history-search-forward
 # Fix Shift+Enter in Ghostty
 bindkey "^[[13;2u" accept-line
 bindkey "^[[27;2;13~" accept-line
-
-# =============================================================================
-# CLAUDE CODE
-# =============================================================================
-
-alias claude-dev='claude --system-prompt "$(cat ~/.claude/contexts/dev.md)"'
-alias claude-review='claude --system-prompt "$(cat ~/.claude/contexts/review.md)"'
-alias claude-research='claude --system-prompt "$(cat ~/.claude/contexts/research.md)"'
 
 # =============================================================================
 # ZOXIDE INITIALIZATION (MUST REMAIN AT THE END)

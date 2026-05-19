@@ -1,0 +1,118 @@
+add_newline = true
+
+# סדר התצוגה: הוספתי את Bun, Deno, ו-Next.js לרשימה
+format = """
+$directory\
+$git_branch\
+$git_status\
+$package\
+$nodejs\
+$bun\
+$deno\
+$custom\
+$python\
+$rust\
+$golang\
+$java\
+$php\
+$docker_context\
+$memory_usage\
+$line_break\
+$character"""
+
+# --- עיצוב בסיסי ---
+[directory]
+style = "bold blue"
+truncation_length = 4
+truncation_symbol = "…/"
+read_only = " 🔒"
+format = '[$path]($style) '
+
+# --- GIT ---
+[git_branch]
+symbol = " "
+style = "bold purple"
+format = '[$symbol$branch]($style) '
+
+[git_status]
+style = "bold red"
+format = '[$all_status$ahead_behind]($style) '
+
+# --- שפות ו-Frameworks מודרניים ---
+
+# Node.js
+[nodejs]
+symbol = " "
+style = "bold green"
+format = 'via [$symbol($version )]($style)'
+
+# Bun (חדש!)
+[bun]
+symbol = "🥯 "
+style = "bold #f472b6" # ורוד
+format = 'via [$symbol($version )]($style)'
+
+# Deno (חדש!)
+[deno]
+symbol = "🦕 "
+style = "bold white"
+format = 'via [$symbol($version )]($style)'
+
+# זיהוי מיוחד ל-Next.js (קסטום)
+# יופיע רק אם יש קובץ next.config בתיקייה
+[custom.nextjs]
+description = "Next.js Project"
+detect_files = ["next.config.js", "next.config.mjs", "next.config.ts"]
+symbol = "▲ " # המשולש של Vercel/Next
+style = "bold white"
+format = 'on [$symbol(Next.js )]($style)'
+
+# --- שפות קלאסיות ---
+
+[python]
+symbol = " "
+style = "bold yellow"
+format = 'via [$symbol($version )]($style)'
+
+[rust]
+symbol = " "
+style = "bold red"
+format = 'via [$symbol($version )]($style)'
+
+[golang]
+symbol = " "
+style = "bold cyan"
+format = 'via [$symbol($version )]($style)'
+
+[java]
+symbol = " "
+style = "bold #ef4444"
+format = 'via [$symbol($version )]($style)'
+
+[php]
+symbol = " "
+style = "bold blue"
+format = 'via [$symbol($version )]($style)'
+
+# --- כללי ---
+
+[package]
+symbol = "📦 "
+style = "bold #a1a1aa"
+format = '[$symbol$version]($style) '
+
+[docker_context]
+symbol = " "
+style = "bold blue"
+format = 'via [$symbol$context]($style) '
+
+[memory_usage]
+symbol = "🧠 "
+threshold = 60
+style = "bold yellow"
+format = '[$symbol${ram_pct}]($style) '
+
+# --- החץ ---
+[character]
+success_symbol = "[➜](bold green)"
+error_symbol = "[✖](bold red)"

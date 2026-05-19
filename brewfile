@@ -1,95 +1,107 @@
+# =============================================================================
+# Brewfile — macOS packages
+# Regenerate from live system: brew bundle dump --force --file=brewfile
+# Install on fresh Mac:        brew bundle install --no-upgrade --file=brewfile
+# =============================================================================
+
+# === Taps ===
 tap "anomalyco/tap"
 tap "domt4/autoupdate"
 tap "oven-sh/bun"
-brew "asciinema"
-brew "openssl@3"
-brew "azure-cli"
+
+# === Core CLI ===
 brew "bat"
-brew "block-goose-cli"
 brew "btop"
 brew "coreutils"
-brew "ctop"
 brew "curl"
-brew "direnv"
-brew "dive"
 brew "dust"
-brew "entr"
 brew "eza"
-brew "fabric-ai"
 brew "fd"
 brew "findutils"
-brew "fish"
 brew "fzf"
-brew "gdu"
+brew "jq"
+brew "moreutils"
+brew "procs"
+brew "ripgrep"
+brew "rsync"
+brew "tree"
+brew "watch"
+brew "yq"
+brew "zoxide"
+brew "zsh-autosuggestions"
+brew "zsh-syntax-highlighting"
+
+# === Dev Tools ===
+brew "direnv"
+brew "entr"
 brew "gh"
 brew "git"
 brew "git-delta"
 brew "git-lfs"
-brew "gitleaks"
-brew "gnupg"
 brew "go"
-brew "hadolint"
-brew "helm"
-brew "jq"
-brew "k9s"
-brew "kubernetes-cli"
-brew "lazydocker"
 brew "lazygit"
-brew "mackup"
-brew "mas"
-brew "moreutils"
 brew "neovim"
-brew "nmap"
 brew "node"
-brew "ollama"
 brew "pandoc"
-brew "pinentry-mac"
-brew "playwright-mcp"
-brew "procs"
-brew "pyenv"
 brew "python@3.12"
-brew "ripgrep"
-brew "rsync"
 brew "rust"
 brew "shellcheck"
 brew "starship"
-brew "telnet"
-brew "thefuck"
-brew "tldr"
 brew "tmux"
-brew "tree"
-brew "trivy"
 brew "uv"
-brew "watch"
-brew "xh"
-brew "yq"
-brew "zellij"
-brew "zoxide"
-brew "zsh-autosuggestions"
-brew "zsh-syntax-highlighting"
-brew "anomalyco/tap/opencode"
 brew "oven-sh/bun/bun"
-cask "anydesk"
+
+# === Security & DevOps ===
+brew "azure-cli"
+brew "ctop"
+brew "dive"
+brew "gdu"
+brew "gitleaks"
+brew "gnupg"
+brew "hadolint"
+brew "helm"
+brew "k9s"
+brew "kubernetes-cli"
+brew "lazydocker"
+brew "nmap"
+brew "openssl@3"
+brew "pinentry-mac"
+brew "telnet"
+brew "trivy"
+brew "xh"
+
+# === AI Tools ===
+brew "fabric-ai"
+brew "ollama"
+brew "playwright-mcp"
+brew "anomalyco/tap/opencode"
+
+# === Productivity ===
+brew "asciinema"
+brew "mackup"
+
+# === Apps — Productivity ===
 cask "arc"
-cask "balenaetcher"
 cask "chatgpt"
 cask "claude"
-cask "claude-code"
-cask "cleanshot"
-cask "cursor"
-cask "displaylink"
-cask "docker-desktop"
-cask "font-fira-code"
-cask "font-hack-nerd-font"
-cask "font-jetbrains-mono"
-cask "ghostty"
-cask "google-chrome"
+cask "claude-code@latest"
 cask "google-drive"
-cask "keka"
-cask "kiro"
-cask "kitty"
+cask "notion"
+cask "obsidian"
+cask "raycast"
+cask "stats"
+cask "zoom"
+
+# === Apps — Development ===
+cask "docker-desktop"
+cask "ghostty"
+cask "sublime-text"
+cask "visual-studio-code"
+
+# === Apps — Work (Microsoft) ===
+cask "anydesk"
+cask "displaylink"
 cask "logi-options+"
-cask "mactex"
 cask "microsoft-auto-update"
 cask "microsoft-edge"
 cask "microsoft-excel"
@@ -97,22 +109,13 @@ cask "microsoft-outlook"
 cask "microsoft-powerpoint"
 cask "microsoft-teams"
 cask "microsoft-word"
-cask "notion"
-cask "obsidian"
-cask "postman"
 cask "powershell"
-cask "raycast"
 cask "slack"
-cask "stats"
-cask "sublime-text"
-cask "visual-studio-code"
-cask "warp"
-cask "windsurf"
-cask "zed"
-cask "zoom"
-mas "Parallels Desktop", id: 1085114709
-mas "Perplexity", id: 6714467650
-mas "Windows App", id: 1295203466
+
+# === Fonts ===
+cask "font-jetbrains-mono"
+
+# === VS Code Extensions ===
 vscode "dbaeumer.vscode-eslint"
 vscode "github.copilot-chat"
 vscode "google.gemini-cli-vscode-ide-companion"
@@ -129,5 +132,33 @@ vscode "ms-vscode.makefile-tools"
 vscode "ms-vscode.powershell"
 vscode "ms-vscode.remote-explorer"
 vscode "tomoki1207.pdf"
+
+# === Other ===
 cargo "evtx"
 uv "specify-cli"
+
+# =============================================================================
+# Removed: intentionally excluded
+# =============================================================================
+# block-goose-cli   — redundant alongside Claude Code
+# cursor            — redundant AI editor
+# fish              — user is on zsh
+# font-fira-code    — only JetBrainsMono used in Ghostty
+# font-hack-nerd-font — only JetBrainsMono used in Ghostty
+# google-chrome     — Arc + Edge sufficient
+# keka              — not regularly used
+# kiro              — removed
+# kitty             — ghostty is the terminal
+# cleanshot         — removed
+# mactex            — large LaTeX install, not needed
+# mas               — no MAS entries, CLI has no purpose
+# mas entries: Parallels Desktop, Perplexity, Windows App — all removed
+# postman           — removed
+# pyenv             — replaced by uv for Python version management
+# thefuck           — removed
+# tldr              — removed
+# warp              — ghostty is the terminal
+# windsurf          — redundant AI editor
+# zed               — using sublime-text as light editor
+# zellij            — tmux is the multiplexer
+
