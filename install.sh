@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BOLD='\033[1m'
 GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
@@ -12,6 +11,31 @@ info()    { echo -e "${BLUE}→${RESET} $1"; }
 success() { echo -e "${GREEN}✓${RESET} $1"; }
 warn()    { echo -e "${YELLOW}!${RESET} $1"; }
 header()  { echo -e "\n${BOLD}$1${RESET}"; }
+
+# =============================================================================
+# Curl-pipe detection
+# When run as: curl -fsSL .../install.sh | bash
+# BASH_SOURCE[0] is empty — no brewfile exists next to the script.
+# Solution: clone the repo to ~/dotfiles, then exec the local install.sh.
+# =============================================================================
+DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]:-/}")" 2>/dev/null && pwd)"
+DOTFILES_REPO="https://github.com/RohiRIK/dotfiles.git"
+DOTFILES_TARGET="$HOME/dotfiles"
+
+if [[ ! -f "$DOTFILES/brewfile" ]]; then
+  header "Curl install detected"
+  info "No local clone found — cloning to $DOTFILES_TARGET..."
+
+  if [[ -d "$DOTFILES_TARGET/.git" ]]; then
+    warn "$DOTFILES_TARGET already exists — pulling latest instead"
+    git -C "$DOTFILES_TARGET" pull --ff-only
+  else
+    git clone "$DOTFILES_REPO" "$DOTFILES_TARGET"
+  fi
+
+  info "Handing off to local install.sh..."
+  exec "$DOTFILES_TARGET/install.sh"
+fi
 
 header "Dotfiles installer"
 info "Source: $DOTFILES"
